@@ -1,11 +1,36 @@
 # Tiến Minh — Vietnamese Voice Assistant (Raspberry Pi Voice Chatbot)
 
-## Hướng dẫn cài đặt cho Raspberry Pi 4 Model B 8GB RAM với hỗ trợ tiếng Việt
+## 🚀 HƯỚNG DẪN NHANH CHO PI 4 (MỚI!)
+
+### ⚡ Cài đặt tự động (1 lệnh - KHUYẾN NGHỊ):
+```bash
+cd ~
+git clone https://github.com/YOUR_USERNAME/voice-chatbot.git
+cd voice-chatbot
+chmod +x pi4_auto_setup.sh
+./pi4_auto_setup.sh
+# Script sẽ tự động phát hiện RAM và cấu hình tối ưu!
+```
+
+📖 **Xem hướng dẫn đơn giản:** [QUICKSTART_PI4.md](QUICKSTART_PI4.md)  
+🔧 **Tối ưu hóa chi tiết:** [PI4_OPTIMIZATION_GUIDE.md](PI4_OPTIMIZATION_GUIDE.md)
+
+### 🎯 Tương thích với tất cả Pi 4:
+- ✅ **Pi 4 1GB** - Chạy được với model nhẹ
+- ✅ **Pi 4 2GB** - Chạy tốt với model base
+- ✅ **Pi 4 4GB** - Chạy rất tốt với model small ⭐ KHUYẾN NGHỊ
+- ✅ **Pi 4 8GB** - Chạy mượt với model medium 🏆
+
+---
+
+## Hướng dẫn cài đặt CHI TIẾT cho Raspberry Pi 4 Model B (Tất cả phiên bản RAM)
 
 > **Thông tin quan trọng**
 >
-> Phiên bản này được tối ưu hóa cho Raspberry Pi 4 Model B 8GB RAM với khả năng nhận diện và phát giọng nói tiếng Việt.
+> Phiên bản này được tối ưu hóa cho **TẤT CẢ** Raspberry Pi 4 Model B (1GB/2GB/4GB/8GB RAM) với khả năng nhận diện và phát giọng nói tiếng Việt.
 > Bao gồm tích hợp Whisper model hỗ trợ tiếng Việt và TTS engine cho tiếng Việt.
+> 
+> **Script tự động** sẽ phát hiện RAM và chọn cấu hình phù hợp!
 
 ---
 

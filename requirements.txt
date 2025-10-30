@@ -1,0 +1,61 @@
+# Vietnamese Voice Chatbot - Python Dependencies
+# Optimized for Raspberry Pi 4 (All RAM variants: 1GB/2GB/4GB/8GB)
+# ARM64 Architecture Support
+
+# === Core Packages ===
+numpy>=1.24.0
+setuptools>=65.0.0
+wheel>=0.38.0
+
+# === PyTorch for ARM64 (CPU-only) ===
+# Install separately: pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# === Speech Recognition (Whisper) ===
+faster-whisper>=0.9.0
+openai-whisper>=20231117
+soundfile>=0.12.0
+librosa>=0.10.0
+
+# === LLM (Ollama) ===
+ollama>=0.1.0
+
+# === Text-to-Speech Engines ===
+gTTS>=2.3.0
+gTTS-token>=1.1.4
+edge-tts>=6.1.0
+pyttsx3>=2.90
+
+# === Audio I/O ===
+pyaudio>=0.2.13
+pygame>=2.5.0
+sounddevice>=0.4.6
+pydub>=0.25.0
+SpeechRecognition>=3.10.0
+
+# === GPIO Support (Pi 4) ===
+RPi.GPIO>=0.7.1
+gpiozero>=2.0.0
+lgpio>=0.2.0
+spidev>=3.6
+
+# === Display/GUI (for HDMI version) ===
+pygame>=2.5.0
+Pillow>=10.0.0
+opencv-python>=4.8.0
+
+# === Utilities ===
+python-dotenv>=1.0.0
+requests>=2.31.0
+urllib3>=2.0.0
+
+# === System/Audio ===
+# Note: These are usually installed via apt on Raspberry Pi
+# sudo apt install -y libportaudio2 libsndfile1 ffmpeg
+
+# === Optional Development Tools ===
+# pytest>=7.4.0
+# black>=23.0.0
+# flake8>=6.0.0
+
