@@ -1,0 +1,22 @@
+[Unit]
+Description=Vietnamese Voice Chatbot for Raspberry Pi 4
+After=network.target sound.target bluetooth.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/voice-chatbot
+ExecStart=/home/pi/voice-chatbot/start_vietnamese_chatbot.sh
+Restart=on-failure
+RestartSec=10
+Environment=PATH=/home/pi/voice-chatbot/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=VIRTUAL_ENV=/home/pi/voice-chatbot/.venv
+Environment=DISPLAY=:0
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=vietnamese-chatbot
+
+[Install]
+WantedBy=multi-user.target
