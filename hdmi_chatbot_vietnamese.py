@@ -164,7 +164,7 @@ def draw_status_bar():
     pygame.draw.rect(screen, (40, 40, 60), (0, 0, SCREEN_WIDTH, 60))
     
     # Title
-    title_text = "Bob - Trợ lý Giọng nói Tiếng Việt" if current_language == "vi" else "Bob - Vietnamese Voice Assistant"
+    title_text = "TienMinh - Trợ lý Giọng nói Tiếng Việt" if current_language == "vi" else "TienMinh - Vietnamese Voice Assistant"
     title_surface = font_medium.render(title_text, True, ACCENT_COLOR)
     screen.blit(title_surface, (20, 15))
     
@@ -191,7 +191,7 @@ def draw_status_bar():
         screen.blit(listening_surface, (status_x, 30))
 
 def draw_main_face():
-    """Draw Bob's face in the center"""
+    """Draw TienMinh's face in the center"""
     if not screen:
         return
     
@@ -885,7 +885,7 @@ def main():
                         else:
                             reply = "Goodbye!"
                         
-                        add_display_message(f"Bob: {reply}", "assistant")
+                        add_display_message(f"TienMinh: {reply}", "assistant")
                         speak_text(reply)
                         break
 
@@ -895,7 +895,7 @@ def main():
                     else:
                         print(f"🤖 Assistant: \"{reply}\"\n")
                     
-                    add_display_message(f"Bob: {reply}", "assistant")
+                    add_display_message(f"TienMinh: {reply}", "assistant")
                     speak_text(reply)
 
                     if current_language == "vi":
