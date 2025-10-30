@@ -3,9 +3,19 @@
 ## ❌ Lỗi: libatlas-base-dev không có sẵn
 
 ### Nguyên nhân:
-Package `libatlas-base-dev` đã **obsolete** (lỗi thời) trên Pi OS Bookworm (mới nhất).
+Package `libatlas-base-dev` đã **obsolete** (lỗi thời) trên Pi OS Bookworm (mới nhất từ 2023).
 
-### ✅ Giải pháp:
+## ❌ Lỗi: language-pack-vi không có sẵn
+
+### Nguyên nhân:
+Package `language-pack-vi` là package của **Ubuntu/Debian desktop**, không có trên **Raspberry Pi OS**.
+
+**Không cần cài đặt** - Pi OS đã hỗ trợ UTF-8 và tiếng Việt mặc định. Chỉ cần cài fonts:
+```bash
+sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu
+```
+
+### Thay thế:
 
 #### Option 1: Dùng script tự động fix (KHUYẾN NGHỊ)
 ```bash

@@ -66,6 +66,7 @@ sudo apt install -y \
   bluez \
   espeak-ng \
   fonts-noto-cjk \
+  fonts-noto-cjk-extra \
   fonts-dejavu 2>/dev/null || echo "Some packages skipped"
 
 echo ""

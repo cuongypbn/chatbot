@@ -159,8 +159,8 @@ sudo apt install -y \
   espeak-ng-data \
   festival \
   festvox-us-slt-hts \
-  language-pack-vi \
   fonts-noto-cjk \
+  fonts-noto-cjk-extra \
   fonts-dejavu
 
 # GUI libraries (cho HDMI version)

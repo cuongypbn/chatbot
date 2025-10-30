@@ -131,6 +131,7 @@ install_package_or_alt "festvox-us-slt-hts" "festival"
 # Fonts
 echo -e "\n${CYAN}Fonts:${NC}"
 install_package_or_alt "fonts-noto-cjk" "fonts-noto-core"
+install_package_or_alt "fonts-noto-cjk-extra" "fonts-noto-cjk"
 install_package_or_alt "fonts-dejavu"
 install_package_or_alt "fonts-liberation" "fonts-dejavu"
 install_package_or_alt "fonts-vlgothic" "fonts-noto-cjk"

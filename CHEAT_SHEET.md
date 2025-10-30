@@ -79,11 +79,15 @@ dmesg | tail                                     # System logs
 ### ❌ Lỗi package khi cài đặt:
 ```bash
 # libatlas-base-dev không có sẵn
-chmod +x install_packages.sh
-./install_packages.sh
+chmod +x quick_fix_packages.sh
+./quick_fix_packages.sh
 
-# Hoặc cài thủ công
-sudo apt install -y libopenblas-dev libblas-dev liblapack-dev
+# language-pack-vi không có sẵn (KHÔNG CẦN - chỉ cần fonts)
+sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu
+
+# Fix tất cả lỗi phổ biến
+chmod +x fix_common_errors.sh
+./fix_common_errors.sh
 ```
 
 ### ❌ Không tìm thấy mic:

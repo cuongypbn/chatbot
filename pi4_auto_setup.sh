@@ -142,13 +142,13 @@ log "Đã cài đặt audio stack"
 sudo apt install -y bluez bluez-tools pi-bluetooth
 log "Đã cài đặt Bluetooth 5.0"
 
-# TTS engines
+# TTS engines and fonts
 sudo apt install -y \
     espeak-ng espeak-ng-data \
     festival festvox-us-slt-hts \
-    language-pack-vi \
-    fonts-noto-cjk fonts-dejavu
-log "Đã cài đặt TTS engines cho tiếng Việt"
+    fonts-noto-cjk fonts-noto-cjk-extra \
+    fonts-dejavu fonts-liberation
+log "Đã cài đặt TTS engines và fonts tiếng Việt"
 
 # GUI libraries (nếu có desktop)
 if [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; then

@@ -125,6 +125,7 @@
 ### Quick Reference (Tham khảo nhanh)
 - **[CHEAT_SHEET.md](CHEAT_SHEET.md)** ⚡ 1 trang, print ra
 - **[QUICKSTART_PI4.md](QUICKSTART_PI4.md)** ⭐ Bắt đầu nhanh
+- **[AFTER_INSTALL.md](AFTER_INSTALL.md)** 🎯 Sau khi cài xong ⭐ NEW
 
 ### Detailed Guides (Hướng dẫn chi tiết)
 - **[PI4_OPTIMIZATION_GUIDE.md](PI4_OPTIMIZATION_GUIDE.md)** 📘 Đầy đủ nhất
@@ -147,7 +148,7 @@
 3. Chạy: ./pi4_auto_setup.sh       (20 phút)
 4. Reboot                           (2 phút)
 5. Đọc: RAM_GUIDE.md               (10 phút)
-6. Chạy: ./start_hdmi_chatbot.sh   
+6. Chạy: ./start_hdmi_chatbot.sh
 7. Enjoy! 🎉
 ```
 
