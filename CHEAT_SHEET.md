@@ -90,24 +90,19 @@ chmod +x fix_common_errors.sh
 ./fix_common_errors.sh
 ```
 
-### ❌ Missing packages error (opencv-python detected but script says missing):
+### ❌ Missing packages error:
 ```bash
-# Package installed but detection failed - script has been fixed
-./start_hdmi_chatbot.sh   # Try again, should work now
+# COMPREHENSIVE FIX (handles all issues)
+chmod +x final_fix.sh
+./final_fix.sh
 
-# Or cleanup + fix
-chmod +x cleanup_and_fix.sh
-./cleanup_and_fix.sh
-```
+# Or simple launcher (bypass all checks)
+chmod +x simple_start.sh  
+./simple_start.sh
 
-### ❌ Other missing packages:
-```bash
-# Quick fix (1 minute)  
-chmod +x quick_fix_now.sh
-./quick_fix_now.sh
-
-# Then try again
-./start_hdmi_chatbot.sh
+# Or direct run (if venv active)
+source .venv/bin/activate
+python3 hdmi_chatbot_vietnamese.py --lang vi
 ```
 
 ### ❌ Không tìm thấy mic:

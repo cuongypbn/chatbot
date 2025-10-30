@@ -85,6 +85,15 @@ check_system() {
         sleep 3
     fi
     
+    # Activate virtual environment BEFORE checking packages
+    if [ -f ".venv/bin/activate" ]; then
+        log_message "🐍 Activating Python virtual environment..."
+        source .venv/bin/activate
+        log_message "✅ Virtual environment activated: $VIRTUAL_ENV"
+    else
+        log_message "⚠️ No virtual environment found, using system Python"
+    fi
+
     # Check Python packages
     log_message "🐍 Checking Python environment..."
     python3 -c "
@@ -201,14 +210,6 @@ select_microphone() {
 start_chatbot() {
     log_message "🚀 Starting HDMI Vietnamese Voice Chatbot..."
     
-    # Activate virtual environment if it exists
-    if [ -f ".venv/bin/activate" ]; then
-        log_message "🐍 Activating Python virtual environment..."
-        source .venv/bin/activate
-        log_message "✅ Virtual environment activated"
-    else
-        log_message "⚠️ No virtual environment found, using system Python"
-    fi
 
     # Build command
     cmd="python3 '$CHATBOT_SCRIPT' --lang $CHATBOT_LANG $MIC_TARGET"
