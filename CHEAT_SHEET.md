@@ -76,6 +76,16 @@ dmesg | tail                                     # System logs
 
 ## 🔧 FIX NHANH LỖI THƯỜNG GẶP
 
+### ❌ Lỗi package khi cài đặt:
+```bash
+# libatlas-base-dev không có sẵn
+chmod +x install_packages.sh
+./install_packages.sh
+
+# Hoặc cài thủ công
+sudo apt install -y libopenblas-dev libblas-dev liblapack-dev
+```
+
 ### ❌ Không tìm thấy mic:
 ```bash
 wpctl status | grep -A 10 "Audio/Source"

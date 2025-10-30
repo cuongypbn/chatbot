@@ -48,6 +48,7 @@
 
 ### Troubleshooting
 - **Fix nhanh**: [CHEAT_SHEET.md#fix-nhanh-lỗi](CHEAT_SHEET.md)
+- **Package errors**: [FIX_PACKAGES.md](FIX_PACKAGES.md) ⭐ NEW
 - **Chi tiết**: [PI4_OPTIMIZATION_GUIDE.md#troubleshooting](PI4_OPTIMIZATION_GUIDE.md)
 - **Test hệ thống**: Chạy `./pi4_system_check.sh`
 

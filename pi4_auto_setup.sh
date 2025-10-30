@@ -122,13 +122,14 @@ echo -e "${BLUE}═════════════════════�
 echo -e "${CYAN}BƯỚC 2: Cài đặt dependencies${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
 
-# Core packages
+# Core packages (updated for Pi OS Bookworm)
 sudo apt install -y \
     build-essential cmake git \
     python3-dev python3-pip python3-venv \
-    libopenblas-dev libatlas-base-dev \
-    libhdf5-dev libportaudio2 \
-    ffmpeg libavcodec-extra libsndfile1 flac
+    libopenblas-dev \
+    libhdf5-dev libportaudio2 portaudio19-dev \
+    ffmpeg libavcodec-extra libsndfile1 flac \
+    libblas-dev liblapack-dev gfortran
 log "Đã cài đặt core packages"
 
 # Audio stack

@@ -117,7 +117,7 @@ lscpu | grep "Model name"
 
 ### Bước 2: Cài đặt dependencies cho Pi 4
 ```bash
-# Core packages optimized for ARM64
+# Core packages optimized for ARM64 (Pi OS Bookworm compatible)
 sudo apt install -y \
   build-essential \
   cmake \
@@ -126,7 +126,9 @@ sudo apt install -y \
   python3-pip \
   python3-venv \
   libopenblas-dev \
-  libatlas-base-dev \
+  libblas-dev \
+  liblapack-dev \
+  gfortran \
   libhdf5-dev \
   libhdf5-serial-dev \
   libportaudio2 \
