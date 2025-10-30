@@ -7,7 +7,6 @@
 > Phiên bản này được tối ưu hóa cho Raspberry Pi 4 Model B 8GB RAM với khả năng nhận diện và phát giọng nói tiếng Việt.
 > Bao gồm tích hợp Whisper model hỗ trợ tiếng Việt và TTS engine cho tiếng Việt.
 
-> ![Bob kit photo](/imagebob.png)
 ---
 
 ## Contents
