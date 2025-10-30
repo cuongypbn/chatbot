@@ -240,9 +240,105 @@ MIC_TARGET=66 python3 chatbot.py
 
 ---
 
-## Step 2 — SPI Display (Waveshare) & “Bob” Chat
+## 🎯 Cách sử dụng đơn giản
 
-### 1) Enable SPI & groups, reboot
+### Chạy với màn hình HDMI (khuyến nghị):
+```bash
+# Khởi chạy script tự động
+./start_hdmi_chatbot.sh
+
+# Sẽ hiển thị giao diện chatbot trên màn hình HDMI
+# Giao diện bao gồm:
+# - Mặt Bob thay đổi khi nói
+# - Lịch sử đàm thoại
+# - Trạng thái microphone/TTS
+# - Hướng dẫn sử dụng
+```
+
+### Chạy với màn hình LCD (nâng cao):
+```bash
+# Sử dụng script bob với LCD
+./start_vietnamese_chatbot.sh
+```
+
+---
+
+## 📺 Chatbot với màn hình HDMI - Hướng dẫn chi tiết
+
+### Giới thiệu
+Phiên bản `hdmi_chatbot_vietnamese.py` được thiết kế đặc biệt cho những ai **KHÔNG có màn hình LCD SPI** mà chỉ sử dụng màn hình HDMI thông thường.
+
+### Tính năng chính:
+- 🖥️ **Giao diện đồ họa**: Hiển thị trên màn hình HDMI với GUI đẹp mắt
+- 🤖 **Mặt Bob**: Biểu hiện cảm xúc khi nói chuyện  
+- 📝 **Lịch sử hội thoại**: Hiển thị 8 tin nhắn gần nhất
+- 🎤 **Trạng thái real-time**: Hiển thị trạng thái micro, TTS
+- 🎛️ **GPIO Buttons**: Hỗ trợ nút dừng (GPIO 22), tạm dừng (GPIO 23), tiếp tục (GPIO 24)
+- 🌐 **Đa ngôn ngữ**: Hỗ trợ Tiếng Việt, English, và tự động nhận diện
+
+### Yêu cầu hệ thống:
+- Raspberry Pi 4 Model B với 8GB RAM
+- Màn hình HDMI (bất kỳ kích thước nào)
+- USB microphone  
+- Bluetooth speakers hoặc 3.5mm audio output
+- Desktop environment (Raspberry Pi OS with Desktop)
+
+### Cài đặt phụ thuộc cho HDMI version:
+```bash
+# Cài đặt pygame cho giao diện đồ họa
+pip install pygame
+
+# Các package đồ họa cần thiết
+sudo apt install -y python3-pygame
+sudo apt install -y fonts-dejavu fonts-liberation
+sudo apt install -y python3-opencv
+
+# Nếu cần fonts tiếng Việt đẹp hơn
+sudo apt install -y fonts-noto-cjk
+```
+
+### Khởi chạy:
+```bash
+# Cách 1: Sử dụng script tự động (khuyến nghị)
+./start_hdmi_chatbot.sh
+
+# Cách 2: Chạy trực tiếp
+python3 hdmi_chatbot_vietnamese.py --lang vi
+
+# Cách 3: Với tùy chọn microphone cụ thể  
+python3 hdmi_chatbot_vietnamese.py --lang vi --mic-target alsa_input.usb-0123456789ABCDEF-00.mono-fallback
+```
+
+---
+
+## 🚀 Cài đặt và Chạy
+
+**⚠️ LỰA CHỌN HIỂN THỊ:**
+- **SPI LCD (1.28 inch)**: Sử dụng `bobchat_vietnamese.py` nếu bạn có màn hình LCD nhỏ
+- **HDMI Monitor**: Sử dụng `hdmi_chatbot_vietnamese.py` cho màn hình HDMI thông thường ✅ **ĐƯỢC KHUYẾN NGHỊ**
+
+### Tùy chọn A: Với màn hình HDMI thông thường 🖥️ (Dễ sử dụng)
+
+```bash
+# Khởi chạy chatbot với giao diện HDMI
+./start_hdmi_chatbot.sh
+
+# Hoặc chạy trực tiếp với tùy chọn
+python3 hdmi_chatbot_vietnamese.py --lang vi
+```
+
+**Ưu điểm của phiên bản HDMI:**
+- ✅ Không cần màn hình LCD đặc biệt
+- ✅ Giao diện đẹp trên màn hình lớn
+- ✅ Hiển thị lịch sử đàm thoại
+- ✅ Trạng thái thời gian thực
+- ✅ Dễ cài đặt hơn
+
+---
+
+### Tùy chọn B: Với màn hình SPI LCD (1.28 inch) 📱 (Nâng cao)
+
+#### 1) Enable SPI & groups, reboot
 
 ~~~bash
 # Enable SPI in raspi-config:
@@ -259,7 +355,7 @@ sudo reboot
 
 ---
 
-### 2) Display packages (Pi 4 optimized)
+#### 2) Display packages (Pi 4 optimized)
 
 ~~~bash
 # For Raspberry Pi 4, install required packages without removing RPi.GPIO

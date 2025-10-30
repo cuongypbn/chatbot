@@ -1,0 +1,32 @@
+[Unit]
+Description=Bob Vietnamese HDMI Voice Chatbot
+After=graphical-session.target pipewire.service ollama.service
+Wants=graphical-session.target pipewire.service ollama.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/voice-chatbot
+ExecStartPre=/bin/bash -c 'until systemctl is-active ollama; do sleep 1; done'
+ExecStart=/home/pi/voice-chatbot/start_hdmi_chatbot.sh --daemon --lang vi
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=60
+
+# Environment variables for Pi 4 optimization
+Environment=DISPLAY=:0
+Environment=GPIOZERO_PIN_FACTORY=rpigpio
+Environment=SDL_AUDIODRIVER=pulse
+Environment=SDL_VIDEODRIVER=x11
+Environment=PIPEWIRE_LATENCY=128/48000
+Environment=OMP_NUM_THREADS=4
+Environment=OPENBLAS_NUM_THREADS=2
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hdmi-chatbot
+
+[Install]
+WantedBy=graphical-session.target
