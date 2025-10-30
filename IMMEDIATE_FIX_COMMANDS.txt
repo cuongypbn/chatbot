@@ -1,0 +1,25 @@
+# IMMEDIATE FIX COMMANDS
+# Copy and paste these commands in your Pi terminal (one by one):
+
+# 1. Make sure you're in the right directory and venv is active
+cd ~/voice-chatbot
+source .venv/bin/activate
+
+# 2. Install the missing ollama package
+pip install ollama
+
+# 3. Install other missing packages to be sure
+pip install faster-whisper gtts opencv-python pygame sounddevice requests python-dotenv
+
+# 4. Test the import
+python3 -c "import ollama; print('✅ ollama package installed successfully!')"
+
+# 5. Run the chatbot
+export DISPLAY=:0
+export GPIOZERO_PIN_FACTORY=rpigpio
+python3 hdmi_chatbot_vietnamese.py --lang vi
+
+# ===== OR RUN THE SCRIPT =====
+# Alternative: run the fix script
+chmod +x install_and_run.sh
+./install_and_run.sh

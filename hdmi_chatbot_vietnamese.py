@@ -112,16 +112,37 @@ def detect_language(text):
 
 # ===== HDMI Display Functions =====
 def init_pygame_display():
-    """Initialize pygame display for HDMI output"""
+    """Initialize pygame display for HDMI output with EGL error handling"""
     global screen, font_large, font_medium, font_small
     
     try:
-        # Initialize pygame
+        # Set SDL to use specific video driver to avoid EGL issues
+        os.environ['SDL_VIDEODRIVER'] = 'x11'
+
+        # Initialize pygame with error handling
         pygame.init()
         pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=1024)
         
-        # Set up display
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        # Try to set up display with fallback options
+        try:
+            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        except Exception as e:
+            if "EGL" in str(e) or "Unable to make EGL context current" in str(e):
+                print("⚠️ EGL error detected, trying fallback display mode...")
+                # Try smaller resolution
+                try:
+                    screen = pygame.display.set_mode((640, 480))
+                    global SCREEN_WIDTH, SCREEN_HEIGHT
+                    SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
+                    print("📺 Using fallback resolution: 640x480")
+                except Exception:
+                    # Try headless mode
+                    os.environ['SDL_VIDEODRIVER'] = 'dummy'
+                    screen = pygame.display.set_mode((800, 600))
+                    print("📺 Using dummy display (headless mode)")
+            else:
+                raise e
+
         pygame.display.set_caption("Tiến Minh - Vietnamese Voice Chatbot")
         
         # Load fonts (Vietnamese compatible)
@@ -140,6 +161,7 @@ def init_pygame_display():
         
     except Exception as e:
         print(f"❌ Failed to initialize display: {e}")
+        print("⚠️ Continuing in audio-only mode...")
         return False
 
 def add_display_message(message, message_type="info"):
@@ -277,41 +299,60 @@ def draw_instructions():
         screen.blit(text_surface, (20, start_y + (i * 15)))
 
 def update_display():
-    """Main display update function"""
+    """Main display update function with error handling"""
     if not screen:
         return
     
-    # Clear screen
-    screen.fill(BACKGROUND_COLOR)
-    
-    # Draw all components
-    draw_status_bar()
-    draw_main_face()
-    draw_messages()
-    draw_instructions()
-    
-    # Update display
-    pygame.display.flip()
+    try:
+        # Clear screen
+        screen.fill(BACKGROUND_COLOR)
+
+        # Draw all components
+        draw_status_bar()
+        draw_main_face()
+        draw_messages()
+        draw_instructions()
+
+        # Update display
+        pygame.display.flip()
+    except Exception as e:
+        # Suppress EGL and other display errors but keep running
+        if "EGL" not in str(e):
+            print(f"Display update error: {e}")
+        pass
 
 def display_loop():
     """Display update loop running in separate thread"""
-    clock = pygame.time.Clock()
-    
+    try:
+        clock = pygame.time.Clock()
+    except Exception:
+        # If pygame clock fails, just use time.sleep
+        clock = None
+
     while True:
         try:
-            # Handle pygame events
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    return
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+            # Handle pygame events (suppress EGL errors)
+            try:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         return
-            
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            return
+            except Exception:
+                pass  # Suppress event handling errors
+
             update_display()
-            clock.tick(30)  # 30 FPS
-            
+
+            if clock:
+                clock.tick(30)  # 30 FPS
+            else:
+                time.sleep(1/30)  # Fallback timing
+
         except Exception as e:
-            print(f"Display error: {e}")
+            # Suppress EGL errors completely but keep other errors for debugging
+            if "EGL" not in str(e) and "Unable to make EGL context current" not in str(e):
+                print(f"Display error: {e}")
             time.sleep(0.1)
 
 def start_display():
@@ -769,6 +810,10 @@ def main():
     global MIC_TARGET, current_language
     args = sys.argv[1:]
     
+    # Suppress EGL debug output to reduce error spam
+    os.environ['MESA_DEBUG'] = 'silent'
+    os.environ['EGL_LOG_LEVEL'] = 'fatal'
+
     # Parse command line arguments
     if "--mic-target" in args:
         try:
@@ -786,6 +831,11 @@ def main():
         except Exception:
             print("⚠️  Usage: --lang <vi|en|auto>")
 
+    # Add headless mode option
+    if "--headless" in args:
+        os.environ['SDL_VIDEODRIVER'] = 'dummy'
+        print("🖥️ Running in headless mode (no display)")
+
     def shutdown_handler(sig, frame):
         if current_language == "vi":
             print("\n\n👋 Đang tắt...")
@@ -802,12 +852,18 @@ def main():
         print("\nUsage: python3 hdmi_chatbot_vietnamese.py [options]")
         print("  --mic-target <id>   Force a specific PipeWire source")
         print("  --lang <vi|en|auto> Set language (vi=Vietnamese, en=English, auto=detect)")
+        print("  --headless          Run without GUI (audio-only mode)")
         print("  --test              Record and play back test audio")
+        print("\nNote: If you get EGL errors, the program will automatically continue in audio-only mode")
         sys.exit(0)
 
-    # Start display
-    if not start_display():
-        print("❌ Could not initialize display, continuing without visual interface")
+    # Start display with better error messaging
+    display_initialized = start_display()
+    if not display_initialized:
+        print("❌ Could not initialize display, continuing in audio-only mode")
+        print("   The chatbot will work fully via voice - no screen interface needed")
+    else:
+        print("✅ Display initialized successfully")
 
     whisper_model = init_models()
     stop_button = init_button()

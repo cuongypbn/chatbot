@@ -34,13 +34,26 @@ fi
 # Activate venv
 echo -e "${YELLOW}Activating virtual environment...${NC}"
 source .venv/bin/activate
-echo -e "${GREEN}✅ Activated: $VIRTUAL_ENV${NC}"
+
+# Verify we're using venv python
+PYTHON_PATH=$(which python3)
+PIP_PATH=$(which pip)
+echo -e "${GREEN}✅ Python: $PYTHON_PATH${NC}"
+echo -e "${GREEN}✅ Pip: $PIP_PATH${NC}"
+
+# If still using system python, use explicit venv paths
+if [[ "$PYTHON_PATH" != *".venv"* ]]; then
+    echo -e "${YELLOW}⚠️ Using explicit venv paths...${NC}"
+    PYTHON_PATH="$(pwd)/.venv/bin/python3"
+    PIP_PATH="$(pwd)/.venv/bin/pip"
+    export PATH="$(pwd)/.venv/bin:$PATH"
+fi
 
 echo ""
 echo -e "${CYAN}Step 2: Installing/updating packages...${NC}"
 
-# Upgrade pip
-pip install --upgrade pip
+# Upgrade pip using explicit path
+$PIP_PATH install --upgrade pip
 
 # Essential packages for chatbot
 PACKAGES=(
@@ -60,13 +73,13 @@ PACKAGES=(
 
 for package in "${PACKAGES[@]}"; do
     echo -e "${YELLOW}Installing $package...${NC}"
-    pip install $package --no-cache-dir 2>/dev/null || echo -e "${YELLOW}⚠️ $package failed (may not be critical)${NC}"
+    $PIP_PATH install $package --no-cache-dir 2>/dev/null || echo -e "${YELLOW}⚠️ $package failed (may not be critical)${NC}"
 done
 
 echo ""
 echo -e "${CYAN}Step 3: Testing package imports...${NC}"
 
-python3 -c "
+$PYTHON_PATH -c "
 import sys
 packages = {
     'numpy': 'numpy',
