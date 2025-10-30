@@ -39,7 +39,8 @@ sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liber
 echo -e "${CYAN}Fix 3: Installing core packages${NC}"
 sudo apt install -y \
     build-essential cmake git \
-    python3-dev python3-pip python3-venv 2>/dev/null && \
+    python3-dev python3-pip python3-venv \
+    swig libffi-dev pkg-config 2>/dev/null && \
     echo -e "${GREEN}✅${NC} Core packages installed" || \
     echo -e "${YELLOW}⚠️${NC}  Some core packages skipped"
 

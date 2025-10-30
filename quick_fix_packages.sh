@@ -23,7 +23,7 @@ echo ""
 echo -e "${YELLOW}1/5${NC} Updating package list..."
 sudo apt update -qq
 
-# Remove problematic packages from list
+# Install core packages
 echo -e "${YELLOW}2/5${NC} Installing core packages..."
 sudo apt install -y \
   build-essential \
@@ -31,7 +31,10 @@ sudo apt install -y \
   git \
   python3-dev \
   python3-pip \
-  python3-venv 2>/dev/null || echo "Some packages skipped"
+  python3-venv \
+  swig \
+  libffi-dev \
+  pkg-config 2>/dev/null || echo "Some packages skipped"
 
 # Install math libraries (alternatives to libatlas-base-dev)
 echo -e "${YELLOW}3/5${NC} Installing math libraries (replacing libatlas-base-dev)..."

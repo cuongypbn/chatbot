@@ -129,8 +129,17 @@ sudo apt install -y \
     libopenblas-dev \
     libhdf5-dev libportaudio2 portaudio19-dev \
     ffmpeg libavcodec-extra libsndfile1 flac \
-    libblas-dev liblapack-dev gfortran
+    libblas-dev liblapack-dev gfortran \
+    swig libffi-dev pkg-config
 log "Đã cài đặt core packages"
+
+# GPIO libraries (system packages to avoid building)
+sudo apt install -y \
+    python3-lgpio python3-gpiozero python3-rpi.gpio \
+    python3-spidev 2>/dev/null || {
+    warn "Some GPIO packages not available via apt, will install via pip"
+}
+log "Đã cài đặt GPIO system packages"
 
 # Audio stack
 sudo apt install -y \
@@ -207,8 +216,26 @@ pip install pyaudio pygame sounddevice pydub
 # GUI
 pip install pygame Pillow
 
-# GPIO
-pip install RPi.GPIO gpiozero lgpio spidev
+# GPIO (with fallback handling)
+echo -e "${CYAN}   Installing GPIO packages...${NC}"
+pip install RPi.GPIO gpiozero || warn "Some GPIO packages failed but may not be critical"
+
+# Try lgpio separately with better error handling
+if ! python3 -c "import lgpio" 2>/dev/null; then
+    echo -e "${CYAN}   Installing lgpio (may take time to build)...${NC}"
+    pip install --no-cache-dir lgpio 2>/dev/null || {
+        warn "lgpio failed to build, using system package fallback"
+        # Try to use system lgpio if available
+        if dpkg -l | grep -q python3-lgpio; then
+            echo -e "${GREEN}   Using system python3-lgpio package${NC}"
+        else
+            warn "lgpio not available - GPIO features may be limited"
+        fi
+    }
+fi
+
+# SpiDev
+pip install spidev || warn "spidev failed but may not be critical"
 
 # Utilities
 pip install python-dotenv requests
