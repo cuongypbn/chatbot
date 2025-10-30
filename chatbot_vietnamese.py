@@ -594,7 +594,7 @@ def main():
 
                     reply = generate_response(user_text)
                     if current_language == "vi":
-                        print(f"🤖 Trợ lý: \"{reply}\"\n")
+                        print(f"🤖 Tiến Minh: \"{reply}\"\n")
                     else:
                         print(f"🤖 Assistant: \"{reply}\"\n")
                     speak_text_vietnamese(reply)

@@ -19,7 +19,7 @@ NC='\033[0m' # No Color
 # Create logs directory
 mkdir -p "$SCRIPT_DIR/logs"
 
-echo -e "${BLUE}🖥️ Vietnamese HDMI Voice Chatbot Startup${NC}"
+echo -e "${BLUE}🖥️ Tiến Minh - Vietnamese HDMI Voice Chatbot Startup${NC}"
 echo "================================================================"
 
 # Function to log messages
@@ -185,7 +185,7 @@ start_chatbot() {
     log_message "📋 Log file: $LOG_FILE"
     
     echo -e "${GREEN}================================================================${NC}"
-    echo -e "${GREEN}🤖 HDMI Vietnamese Voice Chatbot is now running!${NC}"
+    echo -e "${GREEN}🤖 Tiến Minh - HDMI Vietnamese Voice Chatbot is now running!${NC}"
     echo -e "${GREEN}================================================================${NC}"
     echo
     echo "📱 Display: Check your HDMI monitor for the GUI interface"
@@ -246,7 +246,7 @@ main() {
                 shift
                 ;;
             --help)
-                echo "HDMI Vietnamese Voice Chatbot Startup Script"
+                echo "Tiến Minh - HDMI Vietnamese Voice Chatbot Startup Script"
                 echo
                 echo "Usage: $0 [options]"
                 echo "  --lang <vi|en|auto>      Set language"

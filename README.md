@@ -1,4 +1,4 @@
-# Bob — The Sentient Washing Machine (Raspberry Pi Voice Chatbot - Vietnamese Version)
+# Tiến Minh — Vietnamese Voice Assistant (Raspberry Pi Voice Chatbot)
 
 ## Hướng dẫn cài đặt cho Raspberry Pi 4 Model B 8GB RAM với hỗ trợ tiếng Việt
 
@@ -20,7 +20,7 @@
   - [5. Project & Python deps](#5-project--python-deps)
   - [6. Install Ollama & model](#6-install-ollama--model)
   - [7. Create & run `chatbot.py`](#7-create--run-chatbotpy)
-- [Step 2 — SPI Display (Waveshare) & “Bob” Chat](#step-2--spi-display-waveshare--bob-chat)
+- [Step 2 — SPI Display (Waveshare) & "Tiến Minh" Chat](#step-2--spi-display-waveshare--tiến-minh-chat)
   - [1. Enable SPI & groups, reboot](#1-enable-spi--groups-reboot)
   - [2. Display packages (Pi 5 note)](#2-display-packages-pi-5-note)
   - [3. Waveshare driver](#3-waveshare-driver)
@@ -249,7 +249,7 @@ MIC_TARGET=66 python3 chatbot.py
 
 # Sẽ hiển thị giao diện chatbot trên màn hình HDMI
 # Giao diện bao gồm:
-# - Mặt Bob thay đổi khi nói
+# - Mặt Tiến Minh thay đổi khi nói
 # - Lịch sử đàm thoại
 # - Trạng thái microphone/TTS
 # - Hướng dẫn sử dụng
@@ -270,7 +270,7 @@ Phiên bản `hdmi_chatbot_vietnamese.py` được thiết kế đặc biệt ch
 
 ### Tính năng chính:
 - 🖥️ **Giao diện đồ họa**: Hiển thị trên màn hình HDMI với GUI đẹp mắt
-- 🤖 **Mặt Bob**: Biểu hiện cảm xúc khi nói chuyện  
+- 🤖 **Mặt Tiến Minh**: Biểu hiện cảm xúc khi nói chuyện  
 - 📝 **Lịch sử hội thoại**: Hiển thị 8 tin nhắn gần nhất
 - 🎤 **Trạng thái real-time**: Hiển thị trạng thái micro, TTS
 - 🎛️ **GPIO Buttons**: Hỗ trợ nút dừng (GPIO 22), tạm dừng (GPIO 23), tiếp tục (GPIO 24)
@@ -590,7 +590,7 @@ python3 -c "
 from gtts import gTTS
 import pygame
 pygame.mixer.init()
-tts = gTTS('Xin chào, tôi là Bob', lang='vi')
+tts = gTTS('Xin chào, tôi là Tiến Minh', lang='vi')
 tts.save('test_vi.mp3')
 pygame.mixer.music.load('test_vi.mp3')
 pygame.mixer.music.play()
@@ -598,7 +598,7 @@ import time; time.sleep(3)
 "
 
 # 2. Test Edge TTS (Microsoft - cần internet, chất lượng cao)
-edge-tts --voice vi-VN-HoaiMyNeural --text "Xin chào, tôi là Bob với giọng nói chất lượng cao" --write-media test_edge.mp3
+edge-tts --voice vi-VN-HoaiMyNeural --text "Xin chào, tôi là Tiến Minh với giọng nói chất lượng cao" --write-media test_edge.mp3
 mpv test_edge.mp3
 
 # 3. Test espeak-ng (offline, nhanh)

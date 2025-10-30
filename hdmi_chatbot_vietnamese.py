@@ -74,8 +74,8 @@ SUPPORTED_LANGUAGES = ["vi", "en", "auto"]
 
 # Conversation
 AUTO_RESTART_DELAY = 1.5
-VIETNAMESE_WAKE_WORDS = ["xin chào", "chào bạn", "hey trợ lý", "trợ lý ơi"]
-ENGLISH_WAKE_WORDS = ["hey computer", "okay computer", "hey assistant"]
+VIETNAMESE_WAKE_WORDS = ["xin chào", "chào bạn", "hey tiến minh", "tiến minh ơi", "hey trợ lý", "trợ lý ơi"]
+ENGLISH_WAKE_WORDS = ["hey computer", "okay computer", "hey assistant", "hey tien minh"]
 
 # Temp file
 TEMP_WAV = Path("/tmp/recording.wav")
@@ -122,7 +122,7 @@ def init_pygame_display():
         
         # Set up display
         screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Bob - Vietnamese Voice Chatbot")
+        pygame.display.set_caption("Tiến Minh - Vietnamese Voice Chatbot")
         
         # Load fonts (Vietnamese compatible)
         try:
@@ -164,7 +164,7 @@ def draw_status_bar():
     pygame.draw.rect(screen, (40, 40, 60), (0, 0, SCREEN_WIDTH, 60))
     
     # Title
-    title_text = "TienMinh - Trợ lý Giọng nói Tiếng Việt" if current_language == "vi" else "TienMinh - Vietnamese Voice Assistant"
+    title_text = "Tiến Minh - Trợ lý Giọng nói Tiếng Việt" if current_language == "vi" else "Tiến Minh - Vietnamese Voice Assistant"
     title_surface = font_medium.render(title_text, True, ACCENT_COLOR)
     screen.blit(title_surface, (20, 15))
     
@@ -191,7 +191,7 @@ def draw_status_bar():
         screen.blit(listening_surface, (status_x, 30))
 
 def draw_main_face():
-    """Draw TienMinh's face in the center"""
+    """Draw Tiến Minh's face in the center"""
     if not screen:
         return
     
@@ -355,13 +355,13 @@ def init_pause_resume_buttons():
 def init_models():
     global vietnamese_tts
     if current_language == "vi":
-        add_display_message("🚀 Đang khởi động Chatbot Giọng nói...", "info")
+        add_display_message("🚀 Đang khởi động Tiến Minh - Chatbot Giọng nói...", "info")
         add_display_message("📦 Đang tải các mô hình...", "info")
         print("🚀 Đang khởi động Chatbot Giọng nói với màn hình HDMI...")
         print("📦 Đang tải các mô hình (có thể mất một chút thời gian lần đầu)...")
         print("  Đang tải Whisper cho tiếng Việt...")
     else:
-        add_display_message("🚀 Starting Voice Chatbot...", "info")
+        add_display_message("🚀 Starting Tiến Minh - Voice Chatbot...", "info")
         add_display_message("📦 Loading models...", "info")
         print("🚀 Starting Voice Chatbot with HDMI Display...")
         print("📦 Loading models (this may take a moment the first time)...")
@@ -660,9 +660,9 @@ def generate_response(user_text):
     try:
         # Prepare system message based on language
         if current_language == "vi" or detect_language(user_text) == "vi":
-            system_msg = "Bạn là một trợ lý giọng nói hữu ích. Hãy trả lời ngắn gọn (tối đa 2 câu) và tự nhiên bằng tiếng Việt."
+            system_msg = "Bạn là Tiến Minh, một trợ lý giọng nói hữu ích. Hãy trả lời ngắn gọn (tối đa 2 câu) và tự nhiên bằng tiếng Việt."
         else:
-            system_msg = "You are a helpful voice assistant. Keep responses concise (max 2 sentences) and conversational in English."
+            system_msg = "You are Tiến Minh, a helpful voice assistant. Keep responses concise (max 2 sentences) and conversational in English."
         
         # Try primary model first
         try:
@@ -885,17 +885,17 @@ def main():
                         else:
                             reply = "Goodbye!"
                         
-                        add_display_message(f"TienMinh: {reply}", "assistant")
+                        add_display_message(f"Tiến Minh: {reply}", "assistant")
                         speak_text(reply)
                         break
 
                     reply = generate_response(user_text)
                     if current_language == "vi":
-                        print(f"🤖 Trợ lý: \"{reply}\"\n")
+                        print(f"🤖 Tiến Minh: \"{reply}\"\n")
                     else:
                         print(f"🤖 Assistant: \"{reply}\"\n")
                     
-                    add_display_message(f"TienMinh: {reply}", "assistant")
+                    add_display_message(f"Tiến Minh: {reply}", "assistant")
                     speak_text(reply)
 
                     if current_language == "vi":

@@ -1,5 +1,5 @@
 [Unit]
-Description=Bob Vietnamese HDMI Voice Chatbot
+Description=Tiến Minh Vietnamese HDMI Voice Chatbot
 After=graphical-session.target pipewire.service ollama.service
 Wants=graphical-session.target pipewire.service ollama.service
 

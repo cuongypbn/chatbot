@@ -1,4 +1,4 @@
-# 📺 Vietnamese Voice Chatbot - HDMI Version Summary
+# 📺 Tiến Minh - Vietnamese Voice Chatbot - HDMI Version Summary
 
 ## 🎯 Giải pháp cho người không có màn hình LCD SPI
 
@@ -10,7 +10,7 @@ Bạn hoàn toàn đúng! **SPI Display và HDMI là hai công nghệ khác nhau
 
 ### 1. `hdmi_chatbot_vietnamese.py` (800+ dòng)
 **Chatbot với giao diện HDMI đẹp mắt**
-- ✅ Giao diện pygame với mặt Bob biểu cảm
+- ✅ Giao diện pygame với mặt Tiến Minh biểu cảm
 - ✅ Hiển thị lịch sử đàm thoại realtime
 - ✅ Hỗ trợ tiếng Việt + English + auto-detect
 - ✅ Tích hợp vietnamese_tts.py module
@@ -63,8 +63,8 @@ python3 hdmi_chatbot_vietnamese.py --lang vi
 ```
 
 ### Bước 3: Sử dụng
-1. **Nhìn vào màn hình HDMI** - sẽ thấy giao diện chatbot với mặt Bob
-2. **Nói "Xin chào"** - Bob sẽ phản hồi bằng tiếng Việt
+1. **Nhìn vào màn hình HDMI** - sẽ thấy giao diện chatbot với mặt Tiến Minh
+2. **Nói "Xin chào"** - Tiến Minh sẽ phản hồi bằng tiếng Việt
 3. **Trò chuyện tự nhiên** - lịch sử đàm thoại hiển thị trên màn hình
 4. **Nói "Tạm biệt"** - để kết thúc
 
