@@ -34,10 +34,14 @@ import tempfile
 import re
 from vietnamese_tts import VietnameseTTS
 
-# Optional GPIO stop button
+# Optional GPIO stop button (Pi 4 optimized)
 try:
     from gpiozero import Button
     GPIO_AVAILABLE = True
+    # For Pi 4, use default pin factory (RPi.GPIO)
+    import os
+    if not os.environ.get('GPIOZERO_PIN_FACTORY'):
+        os.environ['GPIOZERO_PIN_FACTORY'] = 'rpigpio'
 except ImportError:
     GPIO_AVAILABLE = False
     print("📝 GPIO not available - running without button support")

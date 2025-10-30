@@ -259,18 +259,23 @@ sudo reboot
 
 ---
 
-### 2) Display packages (Pi 5 note)
+### 2) Display packages (Pi 4 optimized)
 
 ~~~bash
-# On a Raspberry Pi 5, remove legacy RPi.GPIO first:
-sudo apt purge -y python3-rpi.gpio
-sudo apt autoremove -y
+# For Raspberry Pi 4, install required packages without removing RPi.GPIO
+sudo apt install -y python3-pip unzip wget git
 
-# Install required packages
-sudo apt install -y python3-pip unzip wget git python3-lgpio
+# Pi 4 specific GPIO libraries (keep legacy RPi.GPIO for compatibility)
+sudo apt install -y python3-rpi.gpio python3-gpiozero
+
+# Optional: Install lgpio for newer compatibility (can coexist with RPi.GPIO)
+sudo apt install -y python3-lgpio
+
+# Install additional packages for LCD display
+sudo apt install -y python3-spidev python3-dev
 ~~~
 
-> If you are **not** on a Pi 5, you can skip the purge step.
+> **Note**: Pi 4 works best with the traditional `RPi.GPIO` library. We keep it installed for maximum compatibility.
 
 ---
 
@@ -295,14 +300,20 @@ source .venv/bin/activate
 
 ---
 
-### 5) Python deps for display
+### 5) Python deps for display (Pi 4)
 
 ~~~bash
-# Install display-related Python packages into the project venv
-pip install pillow numpy spidev gpiozero rpi-lgpio lgpio
+# Install display-related Python packages into the project venv for Pi 4
+pip install pillow numpy spidev gpiozero
 
-# (Optional) Use lgpio pin factory for gpiozero
-export GPIOZERO_PIN_FACTORY=lgpio
+# Pi 4 specific: Install RPi.GPIO for traditional GPIO control
+pip install RPi.GPIO
+
+# Optional: Install newer GPIO libraries for future compatibility
+pip install rpi-lgpio lgpio
+
+# For Pi 4, use the default pin factory (RPi.GPIO)
+# No need to set GPIOZERO_PIN_FACTORY unless you want to use lgpio specifically
 ~~~
 
 ---
@@ -446,7 +457,24 @@ MIC_TARGET=<source-id> python3 chatbot_vietnamese.py --lang auto
 ./start_vietnamese_chatbot.sh
 ~~~
 
-### 5) Kiểm tra và debug
+### 5) Kiểm tra hệ thống Pi 4
+
+~~~bash
+# Chạy script kiểm tra toàn diện cho Pi 4
+./pi4_system_check.sh
+
+# Script này sẽ kiểm tra:
+# - Model Pi và RAM
+# - GPIO/SPI support  
+# - Audio system (PipeWire)
+# - Bluetooth
+# - TTS engines
+# - AI models
+# - Font tiếng Việt
+# - Hiệu năng và nhiệt độ
+~~~
+
+### 6) Kiểm tra và debug chi tiết
 
 ~~~bash
 # Test microphone
@@ -507,11 +535,61 @@ for engine in tts.get_available_engines():
 
 ## Troubleshooting cho Pi 4
 
-### Lỗi memory không đủ
+### Lỗi GPIO/SPI trên Pi 4
+~~~bash
+# Kiểm tra SPI đã được kích hoạt
+lsmod | grep spi
+# Nếu không có kết quả, kích hoạt SPI
+sudo raspi-config  # Interface Options → SPI → Enable
+
+# Kiểm tra quyền truy cập GPIO
+groups $USER  # Phải có gpio, spi trong danh sách
+# Nếu không có:
+sudo usermod -a -G gpio,spi $USER
+sudo reboot
+
+# Test GPIO cơ bản
+python3 -c "
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+print('GPIO works!')
+GPIO.cleanup()
+"
+~~~
+
+### Lỗi LCD display không hoạt động
+~~~bash
+# Kiểm tra kết nối SPI
+ls /dev/spi*  # Phải có /dev/spidev0.0, /dev/spidev0.1
+
+# Test SPI basic
+python3 -c "
+import spidev
+spi = spidev.SpiDev()
+spi.open(0, 0)
+print('SPI works!')
+spi.close()
+"
+
+# Kiểm tra thư viện Waveshare
+cd ~/LCD_Module_RPI_code/RaspberryPi/python/example
+python3 1inch28_LCD_test.py
+~~~
+
+### Lỗi memory không đủ cho Pi 4
 ~~~bash
 # Giảm kích thước model
 ollama pull tinyllama:1.1b  # Model nhỏ hơn
 # Hoặc sử dụng Whisper tiny thay vì small
+
+# Tối ưu hóa Pi 4 memory
+echo "gpu_mem=64" | sudo tee -a /boot/firmware/config.txt  # Giảm GPU mem nếu không dùng desktop
+echo "arm_freq=1800" | sudo tee -a /boot/firmware/config.txt  # Tăng CPU frequency (nếu có tản nhiệt tốt)
+sudo reboot
+
+# Monitor memory usage
+free -h
+htop
 ~~~
 
 ### Lỗi âm thanh tiếng Việt
@@ -519,12 +597,48 @@ ollama pull tinyllama:1.1b  # Model nhỏ hơn
 # Cài đặt espeak-ng Vietnamese
 sudo apt install espeak-ng-vi
 espeak-ng -v vi "Xin chào"
+
+# Kiểm tra PipeWire status
+systemctl --user status pipewire
+wpctl status
+
+# Test audio output
+speaker-test -t wav -c 2
 ~~~
 
-### Lỗi font LCD
+### Lỗi font LCD tiếng Việt
 ~~~bash
 # Kiểm tra font tiếng Việt
 fc-list :lang=vi
 # Cài thêm font nếu cần
-sudo apt install fonts-noto-color-emoji
+sudo apt install fonts-noto-color-emoji fonts-dejavu-extra
+
+# Test font trong Python
+python3 -c "
+from PIL import Image, ImageDraw, ImageFont
+try:
+    font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 16)
+    print('Vietnamese font available!')
+except:
+    print('Font not found, using default')
+"
+~~~
+
+### Lỗi GPIO pin factory cho Pi 4
+~~~bash
+# Nếu gặp lỗi với gpiozero, thử các factory khác nhau:
+
+# Sử dụng RPi.GPIO (mặc định cho Pi 4)
+export GPIOZERO_PIN_FACTORY=rpigpio
+python3 your_script.py
+
+# Hoặc thử lgpio (mới hơn)
+export GPIOZERO_PIN_FACTORY=lgpio
+python3 your_script.py
+
+# Kiểm tra factory hiện tại
+python3 -c "
+from gpiozero.pins import pi
+print(f'Current pin factory: {pi.pin_factory}')
+"
 ~~~
