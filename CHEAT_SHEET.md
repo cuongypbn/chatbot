@@ -90,9 +90,19 @@ chmod +x fix_common_errors.sh
 ./fix_common_errors.sh
 ```
 
-### ❌ Missing packages error:
+### ❌ Missing packages error (opencv-python detected but script says missing):
 ```bash
-# Quick fix (1 minute)
+# Package installed but detection failed - script has been fixed
+./start_hdmi_chatbot.sh   # Try again, should work now
+
+# Or cleanup + fix
+chmod +x cleanup_and_fix.sh
+./cleanup_and_fix.sh
+```
+
+### ❌ Other missing packages:
+```bash
+# Quick fix (1 minute)  
 chmod +x quick_fix_now.sh
 ./quick_fix_now.sh
 

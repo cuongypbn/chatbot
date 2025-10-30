@@ -89,15 +89,26 @@ check_system() {
     log_message "🐍 Checking Python environment..."
     python3 -c "
 import sys
-required_packages = [
-    'numpy', 'pygame', 'faster_whisper', 'ollama', 
-    'gtts', 'gpiozero', 'opencv-python'
-]
+import importlib.util
+
+# Package mapping for imports
+package_imports = {
+    'numpy': 'numpy',
+    'pygame': 'pygame',
+    'faster_whisper': 'faster_whisper',
+    'ollama': 'ollama',
+    'gtts': 'gtts',
+    'gpiozero': 'gpiozero',
+    'opencv-python': 'cv2'  # opencv-python imports as cv2
+}
+
 missing = []
-for package in required_packages:
+for package, import_name in package_imports.items():
     try:
-        __import__(package.replace('-', '_'))
-    except ImportError:
+        spec = importlib.util.find_spec(import_name)
+        if spec is None:
+            missing.append(package)
+    except (ImportError, ModuleNotFoundError, ValueError):
         missing.append(package)
 
 if missing:

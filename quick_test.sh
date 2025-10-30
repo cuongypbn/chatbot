@@ -86,6 +86,7 @@ if [ -d ".venv" ]; then
     python3 -c "import ollama" 2>/dev/null && test_pass "Ollama client installed" || test_fail "Ollama client not installed"
     python3 -c "from gtts import gTTS" 2>/dev/null && test_pass "gTTS installed" || test_fail "gTTS not installed"
     python3 -c "import pygame" 2>/dev/null && test_pass "Pygame installed" || test_fail "Pygame not installed"
+    python3 -c "import cv2" 2>/dev/null && test_pass "OpenCV (cv2) installed" || test_fail "OpenCV not installed"
     python3 -c "import RPi.GPIO" 2>/dev/null && test_pass "RPi.GPIO installed" || test_fail "RPi.GPIO not installed"
 
 else
