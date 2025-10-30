@@ -90,6 +90,16 @@ chmod +x fix_common_errors.sh
 ./fix_common_errors.sh
 ```
 
+### ❌ Missing packages error:
+```bash
+# Quick fix (1 minute)
+chmod +x quick_fix_now.sh
+./quick_fix_now.sh
+
+# Then try again
+./start_hdmi_chatbot.sh
+```
+
 ### ❌ Không tìm thấy mic:
 ```bash
 wpctl status | grep -A 10 "Audio/Source"

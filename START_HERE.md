@@ -141,6 +141,18 @@ wpctl status | grep "Audio/Source"
 MIC_TARGET=<ID> ./start_hdmi_chatbot.sh
 ```
 
+### Lỗi missing packages:
+```bash
+# Check if venv exists and activate
+cd ~/voice-chatbot
+source .venv/bin/activate
+pip install faster-whisper ollama gtts opencv-python
+
+# Or run quick fix
+chmod +x fix_missing_packages.sh
+./fix_missing_packages.sh
+```
+
 ### Lỗi Ollama:
 ```bash
 sudo systemctl restart ollama

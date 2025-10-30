@@ -108,6 +108,24 @@ else:
     print('✅ All required packages available')
 " || {
         log_message "❌ Python package check failed"
+        echo ""
+        echo -e "${RED}╔══════════════════════════════════════════════════════════════╗${NC}"
+        echo -e "${RED}║                    MISSING PACKAGES ERROR                   ║${NC}"
+        echo -e "${RED}╚══════════════════════════════════════════════════════════════╝${NC}"
+        echo ""
+        echo -e "${CYAN}The auto-setup didn't complete properly. Here's how to fix:${NC}"
+        echo ""
+        echo -e "${YELLOW}Option 1: Run the fix script (RECOMMENDED)${NC}"
+        echo -e "  ${GREEN}chmod +x fix_missing_packages.sh${NC}"
+        echo -e "  ${GREEN}./fix_missing_packages.sh${NC}"
+        echo ""
+        echo -e "${YELLOW}Option 2: Manual fix${NC}"
+        echo -e "  ${GREEN}source .venv/bin/activate${NC}"
+        echo -e "  ${GREEN}pip install faster-whisper ollama gtts opencv-python${NC}"
+        echo ""
+        echo -e "${YELLOW}Option 3: Re-run complete setup${NC}"
+        echo -e "  ${GREEN}./pi4_auto_setup.sh${NC}"
+        echo ""
         exit 1
     }
 }
@@ -172,6 +190,15 @@ select_microphone() {
 start_chatbot() {
     log_message "🚀 Starting HDMI Vietnamese Voice Chatbot..."
     
+    # Activate virtual environment if it exists
+    if [ -f ".venv/bin/activate" ]; then
+        log_message "🐍 Activating Python virtual environment..."
+        source .venv/bin/activate
+        log_message "✅ Virtual environment activated"
+    else
+        log_message "⚠️ No virtual environment found, using system Python"
+    fi
+
     # Build command
     cmd="python3 '$CHATBOT_SCRIPT' --lang $CHATBOT_LANG $MIC_TARGET"
     log_message "📝 Command: $cmd"
